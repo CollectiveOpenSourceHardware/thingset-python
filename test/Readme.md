@@ -25,6 +25,7 @@ Device ID: 0x00
 ## MPPT
 
 Device ID: 0x0A
+
 | Data Object ID | Data Name |
 |--------|-------|
 | 0x4001 | vBat |
