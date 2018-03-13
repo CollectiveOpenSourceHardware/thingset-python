@@ -1,6 +1,6 @@
 import socket
 import struct
-from thingset.packet import TSPacket, Single
+from thingset.packet import TSPacket, SingleFrame
 
 class CANsocket(object):
     FMT = '<IB3x8s'
