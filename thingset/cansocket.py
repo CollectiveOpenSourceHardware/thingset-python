@@ -14,7 +14,7 @@ class CANsocket(object):
         can_id, length, data = struct.unpack(self.FMT, packet)
         can_id &= socket.CAN_EFF_MASK
         if (can_id & TSPacket.TS_FRAME_FLAG):
-            frame = Single(data=data)
+            frame = SingleFrame(data=data)
             frame.parseIdentifier(can_id)
 
         return(frame)
