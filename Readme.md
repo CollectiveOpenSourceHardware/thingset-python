@@ -33,7 +33,12 @@ At the moment you have to use the python shell. I script for nicer commands is o
 ``` python
 from thingset.cansocket import CANsocket
 sock = CANsocket('vcan0')  # or other interface
-sock.receive()
+frame = sock.receive()
+print(frame.data) # raw data
+print(frame.cbor) # cbor decoded data
+print(frame.priority)
+print(frame.dataobjectID)
+print(frame.source)
 ```
 
 ### listen to packets in a loop:
@@ -41,7 +46,7 @@ sock.receive()
 from thingset.cansocket import CANsocket
 sock = CANsocket('vcan0')  # or other interface
 while(True)
-  sock.receive()
+  frame = sock.receive()
 ```
 
 ### parse can trace
