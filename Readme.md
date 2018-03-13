@@ -31,15 +31,15 @@ At the moment you have to use the python shell. I script for nicer commands is o
 
 ### listen to a single packet
 ``` python
-from thingset.packet import CANsocket
-sock = CANsocket()
+from thingset.cansocket import CANsocket
+sock = CANsocket('vcan0')  # or other interface
 sock.receive()
 ```
 
 ### listen to packets in a loop:
 ``` python
-from thingset.packet import CANsocket
-sock = CANsocket()
+from thingset.cansocket import CANsocket
+sock = CANsocket('vcan0')  # or other interface
 while(True)
   sock.receive()
 ```
