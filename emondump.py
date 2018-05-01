@@ -19,11 +19,17 @@ while(True):
 	print('start')
 	start = time.time()
 	frame = sock.receive()
+	node = 0
 	if isinstance(frame.cbor, float):
 		if frame.source == 0x00:
+			node = 'BMS'
 			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 		if frame.source == 0x0A:
+			node = 'MPPT'
 			dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
+		if not node:
+			print("Error! Unknown Source")
+			break
 		if (start - end) > 1:
 			emonpostBMS = emonstring + node + '&fulljson=' + json.dumps(dataBMS) + '&apikey=' + apikey
 			emonpostMPPT = emonstring + node + '&fulljson=' + json.dumps(dataMPPT) + '&apikey=' + apikey
