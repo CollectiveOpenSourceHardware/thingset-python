@@ -23,6 +23,7 @@ while(True):
 		if frame.source == 0x00:
 			node = 'BMS'
 			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
+			print('{} : {}'.format(node,{dataObject[frame.source][frame.dataobjectID]: frame.cbor}) 
 		if frame.source == 0x0A:
 			node = 'MPPT'
 			dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
@@ -34,7 +35,7 @@ while(True):
 			emonpostMPPT = emonstring + node + '&fulljson=' + json.dumps(dataMPPT) + '&apikey=' + apikey
 			rBMS = requests.post(emonpostBMS)
 			rMPPT = requests.post(emonpostMPPT)
-			print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
-			print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
+			#print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
+			#print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
 			start = time.time()
 		end = time.time()
