@@ -13,7 +13,7 @@ candump -L vcan0
 cansend vcan0 012#deadbeef
 ```
 
-### prepare python env (not needed but advised)
+## prepare python env (not needed but advised)
 In directory with requirements.txt:
 
 ``` shell
@@ -26,13 +26,37 @@ You can skip the first two commands, then all python packages will be added to y
 deactivate
 ```
 
-### Usage:
-``` shell
+## Usage:
+At the moment you have to use the python shell. I script for nicer commands is on the way.
 
+### listen to a single packet
+``` python
+from thingset.cansocket import CANsocket
+sock = CANsocket('vcan0')  # or other interface
+frame = sock.receive()
+print(frame.data) # raw data
+print(frame.cbor) # cbor decoded data
+print(frame.priority)
+print(frame.dataobjectID)
+print(frame.source)
 ```
-You should see decoded cbor data
 
-### send dummy data via cansend to test:
+### listen to packets in a loop:
+``` python
+from thingset.cansocket import CANsocket
+sock = CANsocket('vcan0')  # or other interface
+while(True)
+  frame = sock.receive()
+```
+
+### parse can trace
+Assuming the trace file ist called "trace123.csv":
+``` python
+from thingset.parser import playback
+playback('trace123.csv")
+```
+
+## send dummy data via cansend to test:
 ``` shell
 cansend vcan0 014#8000FA3FF33333
 cansend vcan0 014#8000820C16

@@ -66,7 +66,7 @@ class SingleFrame(PublicationFrame):
     def parseIdentifier(self, identifier):
         if not isinstance(identifier, int):
             raise ValueError("Identifier must be integer, not {}.".format(identifier))
-        if identifier >= (CAN_EFF_FLAG >> 2):
+        if identifier >= (1 << 30):
             raise ValueError("Identifier too big. Cannot contain more than 29 bits")
         if not (identifier & TSPacket.TS_FRAME_FLAG):
             raise ValueError("Not a publication message.")

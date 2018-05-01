@@ -1,6 +1,6 @@
 import socket
 import struct
-from thingset.packet import TSPacket, Single
+from thingset.packet import TSPacket, SingleFrame
 
 class CANsocket(object):
     FMT = '<IB3x8s'
@@ -14,7 +14,7 @@ class CANsocket(object):
         can_id, length, data = struct.unpack(self.FMT, packet)
         can_id &= socket.CAN_EFF_MASK
         if (can_id & TSPacket.TS_FRAME_FLAG):
-            frame = Single(data=data)
+            frame = SingleFrame(data=data)
             frame.parseIdentifier(can_id)
 
         return(frame)
