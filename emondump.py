@@ -24,7 +24,7 @@ while(True):
 			node = 'BMS'
 			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 			print('{} : {}'.format(node,{dataObject[frame.source][frame.dataobjectID]: frame.cbor})) 
-		if frame.source == 0x0A:
+		""" if frame.source == 0x0A:
 			node = 'MPPT'
 			dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 		if not node:
@@ -38,4 +38,4 @@ while(True):
 			#print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
 			#print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
 			start = time.time()
-		end = time.time()
+		end = time.time() """
