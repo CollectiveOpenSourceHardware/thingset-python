@@ -1,5 +1,5 @@
 from thingset.cansocket import CANsocket
-import json
+import json, requests
 
 sock = CANsocket('can0')  # or other interface
 emonstring = 'http://192.168.178.26/emoncms/input/post?node='
@@ -24,6 +24,7 @@ while(True):
 			print("Error - unknown source!")
 			break
 		data = {dataObject[frame.dataobjectID]: frame.cbor}
-		emonpost = emonstring + node + '&fulljson={' + json.dumps(data) + '}&apikey=' + apikey
+		emonpost = emonstring + node + '&fulljson=' + json.dumps(data) + '&apikey=' + apikey
 		#print("device: 0x%x  data id: 0x%x   value: %.2f" % (frame.source, frame.dataobjectID, frame.cbor))
-		print(emonpost)
+		r = requests.get(emonpost)
+		print(r.content)
