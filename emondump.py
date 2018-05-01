@@ -19,18 +19,12 @@ start = time.time()
 while(True):
 	frame = sock.receive()
 	node = 0
-	if isinstance(frame.cbor, float):
-		if frame.source == 0x0A:
-			node = 'MPPT'
-			dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
-		if frame.source == 0x0:
-			node = 'BMS'
-			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
-			print('{} : {}'.format(node,{dataObject[frame.source][frame.dataobjectID]: frame.cbor})) 
-	else:
+	if frame.source == 0x0A:
+		node = 'MPPT'
+		dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: float(frame.cbor)})
+	if frame.source == 0x0:
 		node = 'BMS'
-		dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
-		print('{} : {}'.format(node,{dataObject[frame.source][frame.dataobjectID]: frame.cbor})) 
+		dataBMS.update({dataObject[frame.source][frame.dataobjectID]: float(frame.cbor)})
 	if not node:
 		print("Error! Unknown Source")
 		break
