@@ -2,6 +2,7 @@
 .thingset/
 .thingset36/
 .env
+data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
