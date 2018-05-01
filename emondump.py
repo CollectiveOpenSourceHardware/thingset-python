@@ -23,7 +23,7 @@ while(True):
 		if not node:
 			print("Error - unknown source!")
 			break
-		data = {dataObject[frame.dataobjectID]: frame.cbor}
+		data = {dataObject[frame.source][frame.dataobjectID]: frame.cbor}
 		emonpost = emonstring + node + '&fulljson=' + json.dumps(data) + '&apikey=' + apikey
 		#print("device: 0x%x  data id: 0x%x   value: %.2f" % (frame.source, frame.dataobjectID, frame.cbor))
 		r = requests.get(emonpost)
