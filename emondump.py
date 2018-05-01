@@ -16,7 +16,6 @@ dataMPPT = {'vBat': 0}
 end = 0
 
 while(True):
-	print('start')
 	start = time.time()
 	frame = sock.receive()
 	node = 0
@@ -38,4 +37,3 @@ while(True):
 			print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
 			print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
 		end = time.time()
-	print(json.dumps(dataBMS))
