@@ -19,8 +19,8 @@ start = time.time()
 while(True):
 	frame = sock.receive()
 	node = 0
-	print(frame.source)
 	if isinstance(frame.cbor, float):
+		print(hex(frame.source))
 		if frame.source == 0x0:
 			node = 'BMS'
 			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
