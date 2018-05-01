@@ -24,9 +24,6 @@ while(True):
 			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 		if frame.source == 0x0A:
 			dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
-		if not node:
-			print("Error - unknown source!")
-			break
 		if (start - end) > 1:
 			emonpostBMS = emonstring + node + '&fulljson=' + json.dumps(dataBMS) + '&apikey=' + apikey
 			emonpostMPPT = emonstring + node + '&fulljson=' + json.dumps(dataMPPT) + '&apikey=' + apikey
