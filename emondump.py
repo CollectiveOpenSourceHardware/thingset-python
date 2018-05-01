@@ -19,6 +19,7 @@ start = time.time()
 while(True):
 	frame = sock.receive()
 	node = 0
+	print(frame.source)
 	if isinstance(frame.cbor, float):
 		if frame.source == 0x0:
 			node = 'BMS'
