@@ -20,11 +20,13 @@ while(True):
 	frame = sock.receive()
 	node = 0
 	if isinstance(frame.cbor, float):
-		print(hex(frame.source))
 		if frame.source == 0x0:
 			node = 'BMS'
 			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 			print('{} : {}'.format(node,{dataObject[frame.source][frame.dataobjectID]: frame.cbor})) 
+	else:
+		print("else")
+		print('{} : {}'.format(node,{dataObject[frame.source][frame.dataobjectID]: frame.cbor})) 
 		""" if frame.source == 0x0A:
 			node = 'MPPT'
 			dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
