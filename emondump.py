@@ -1,5 +1,5 @@
 from thingset.cansocket import CANsocket
-import json, requests
+import json, requests, time
 
 sock = CANsocket('can0')  # or other interface
 emonstring = 'http://192.168.178.26/emoncms/input/post?node='
@@ -11,20 +11,27 @@ dataObject = {0x00:{0x4001: 'vBat', 0x4002: 'vLoad', 0x4003: 'vCell1', 0x4004: '
 			  0x4005: 'tempExt', 0x4006: 'tempInt', 0x4007: 'loadEn', 0x4008: 'eInputDay_Wh',
 			  0x4009: 'eOutputDay_Wh', 0x400A: 'eInputTotal_Wh', 0x400B: 'eOutputTotal_Wh'}}
 
+dataBMS = dict()
+dataMPPT = dict()
+end = 0
 
 while(True):
+	start = time.time()
 	frame = sock.receive()
 	if isinstance(frame.cbor, float):
 		node = 0
 		if frame.source == 0x00:
-			node = 'BMS'
+			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 		if frame.source == 0x0A:
-			node = 'MPPT'
+			dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 		if not node:
 			print("Error - unknown source!")
 			break
-		data = {dataObject[frame.source][frame.dataobjectID]: frame.cbor}
-		emonpost = emonstring + node + '&fulljson=' + json.dumps(data) + '&apikey=' + apikey
-		#print("device: 0x%x  data id: 0x%x   value: %.2f" % (frame.source, frame.dataobjectID, frame.cbor))
-		r = requests.post(emonpost)
-		print('{} -> {}: {}'.format(node, data, r.content))
+		if (start - end) > 1:
+			emonpostBMS = emonstring + node + '&fulljson=' + json.dumps(dataBMS) + '&apikey=' + apikey
+			emonpostMPPT = emonstring + node + '&fulljson=' + json.dumps(dataMPPT) + '&apikey=' + apikey
+			rBMS = requests.post(emonpostBMS)
+			rMPPT = requests.post(emonpostMPPT)
+			print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
+			print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
+		end = time.time()
