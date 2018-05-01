@@ -27,4 +27,4 @@ while(True):
 		emonpost = emonstring + node + '&fulljson=' + json.dumps(data) + '&apikey=' + apikey
 		#print("device: 0x%x  data id: 0x%x   value: %.2f" % (frame.source, frame.dataobjectID, frame.cbor))
 		r = requests.get(emonpost)
-		print(r.content)
+		print('{} -> {}: {}'.format(node, data, r.content))
