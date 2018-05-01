@@ -18,19 +18,19 @@ end = 0
 start = time.time()
 while(True):
 	frame = sock.receive()
-	node = 0
+	node = -1 
 	if frame.source == 0x0A:
 		node = 'MPPT'
-		dataMPPT.update({dataObject[frame.source][frame.dataobjectID]: float(frame.cbor)})
-	if frame.source == 0x0:
+		dataMPPT.update({dataObject[0x0A][frame.dataobjectID]: float(frame.cbor)})
+	if frame.source == 0x00:
 		node = 'BMS'
-		dataBMS.update({dataObject[frame.source][frame.dataobjectID]: float(frame.cbor)})
-	if not node:
+		dataBMS.update({dataObject[0x00][frame.dataobjectID]: float(frame.cbor)})
+	if node == -1:
 		print("Error! Unknown Source")
 		break
 	if (end - start) > 1:
-		emonpostBMS = emonstring + node + '&fulljson=' + json.dumps(dataBMS) + '&apikey=' + apikey
-		emonpostMPPT = emonstring + node + '&fulljson=' + json.dumps(dataMPPT) + '&apikey=' + apikey
+		emonpostBMS = emonstring + 'BMS' + '&fulljson=' + json.dumps(dataBMS) + '&apikey=' + apikey
+		emonpostMPPT = emonstring + 'MPPT' + '&fulljson=' + json.dumps(dataMPPT) + '&apikey=' + apikey
 		rBMS = requests.post(emonpostBMS)
 		rMPPT = requests.post(emonpostMPPT)
 		print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
