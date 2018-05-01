@@ -16,10 +16,10 @@ dataMPPT = {'vBat': 0}
 end = 0
 
 while(True):
+	print('start')
 	start = time.time()
 	frame = sock.receive()
 	if isinstance(frame.cbor, float):
-		node = 0
 		if frame.source == 0x00:
 			dataBMS.update({dataObject[frame.source][frame.dataobjectID]: frame.cbor})
 		if frame.source == 0x0A:
@@ -32,3 +32,4 @@ while(True):
 			print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
 			print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
 		end = time.time()
+	print(json.dumps(dataBMS))
