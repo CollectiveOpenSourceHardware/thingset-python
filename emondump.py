@@ -15,8 +15,9 @@ dataBMS = {'vBat': 0}
 dataMPPT = {'vBat': 0} 
 end = 0
 
+start = time.time()
 while(True):
-	start = time.time()
+	print(start)
 	frame = sock.receive()
 	node = 0
 	if isinstance(frame.cbor, float):
@@ -36,4 +37,6 @@ while(True):
 			rMPPT = requests.post(emonpostMPPT)
 			print('{} : {}'.format(json.dumps(dataBMS), rBMS.content))
 			print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
+			start = time.time()
 		end = time.time()
+		print(end)
