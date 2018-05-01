@@ -17,7 +17,6 @@ end = 0
 
 start = time.time()
 while(True):
-	print(start)
 	frame = sock.receive()
 	node = 0
 	if isinstance(frame.cbor, float):
@@ -30,7 +29,7 @@ while(True):
 		if not node:
 			print("Error! Unknown Source")
 			break
-		if (start - end) > 1:
+		if (end - start) > 1:
 			emonpostBMS = emonstring + node + '&fulljson=' + json.dumps(dataBMS) + '&apikey=' + apikey
 			emonpostMPPT = emonstring + node + '&fulljson=' + json.dumps(dataMPPT) + '&apikey=' + apikey
 			rBMS = requests.post(emonpostBMS)
@@ -39,4 +38,3 @@ while(True):
 			print('{} : {}'.format(json.dumps(dataMPPT), rMPPT.content))
 			start = time.time()
 		end = time.time()
-		print(end)
